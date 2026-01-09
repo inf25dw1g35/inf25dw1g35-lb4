@@ -1,0 +1,60 @@
+services:
+  backend:
+    # Constroi a imagem do serviço app a partir do Dockerfile na raiz do projeto
+    build: ./lb4filmapi
+    container_name: filmAPIlb4-backend
+    ports:
+      - 3000:3000
+    env_file:
+      - ./lb4filmapi/.env
+    # Garante que o serviço app só inicie após o serviço mysql estar em funcionamento
+    depends_on:
+      mysql:
+          condition: service_healthy
+    networks:
+      - filmAPIlb4-network
+    # Define que o container deve reiniciar automaticamente em caso de falha
+    restart: always
+
+  frontend:
+    build: ./filmapi_react_app
+    container_name: filmAPIlb4-frontend
+    ports:
+      - 3006:80
+    depends_on:
+      - backend
+    networks:
+      - filmAPIlb4-network
+    restart: always
+
+  mysql:
+  # Constroi a imagem do serviço mysql a partir do Dockerfile na pasta databaseSchema
+    build: ./lb4filmapi/databaseSchema
+    container_name: filmAPIlb4-mysql
+    env_file:
+      - ./lb4filmapi/.env
+    ports:
+      - 3306:3306
+    # Define o volume para persistência dos dados do MySQL
+    volumes:
+      - filmAPIlb4-mysql-data:/var/lib/mysql
+    networks:
+      - filmAPIlb4-network
+    # Define que o container deve reiniciar automaticamente em caso de falha
+    restart: always
+    # Define o healthcheck do serviço MySQL
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+
+#Cria o volume para persistência dos dados do MySQL
+volumes:
+  filmAPIlb4-mysql-data:
+# Cria a rede personalizada para os serviços
+networks:
+  filmAPIlb4-network:
+    driver: bridge
