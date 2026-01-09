@@ -1,0 +1,775 @@
+{
+	"info": {
+		"_postman_id": "7a1ff539-89c8-4ca3-a8c3-257628d45ee1",
+		"name": "Film API - M3",
+		"description": "API REST para gestão de filmes, atores, realizadores e géneros  \nServidor base: [http://localhost:3000](http://localhost:3000)  \nAutor: Francisco Dias ([a029185@umaia.pt](https://mailto:a029185@umaia.pt))",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25704591"
+	},
+	"item": [
+		{
+			"name": "Ping",
+			"item": [
+				{
+					"name": "Ping (health check)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/ping",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"ping"
+							]
+						},
+						"description": "Verifica se a API está a responder"
+					},
+					"response": [
+						{
+							"name": "Success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/ping",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"ping"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "Text",
+							"header": [],
+							"cookie": [],
+							"body": "{\n  \"greeting\": \"Hello from Film API\",\n  \"date\": \"2025-12-30T...\",\n  \"url\": \"/ping\",\n  \"headers\": {\n    \"Content-Type\": \"application/json\"\n  }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Actors",
+			"item": [
+				{
+					"name": "Listar todos os atores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actors?filter=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actors"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "",
+									"description": "Ex: {\"include\":[\"films\"]}"
+								}
+							]
+						},
+						"description": "Retorna lista de atores (com opção de incluir filmes)"
+					},
+					"response": []
+				},
+				{
+					"name": "Criar novo ator",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Leonardo DiCaprio\",\n  \"birthdate\": \"1974-11-11\",\n  \"country\": \"USA\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/actors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar todos os atores (patch)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"country\": \"Portugal\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/actors?where={\"name\":\"Leonardo DiCaprio\"}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actors"
+							],
+							"query": [
+								{
+									"key": "where",
+									"value": "{\"name\":\"Leonardo DiCaprio\"}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter ator por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actors/1?filter={\"include\":[\"films\"]}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actors",
+								"1"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "{\"include\":[\"films\"]}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar ator por ID (patch)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Leonardo DiCaprio Atualizado\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/actors/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Substituir ator por ID (put)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"name\": \"Leonardo DiCaprio\",\n  \"birthdate\": \"1974-11-11\",\n  \"country\": \"USA\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/actors/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Contar atores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actors/count?where={\"country\":\"USA\"}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actors",
+								"count"
+							],
+							"query": [
+								{
+									"key": "where",
+									"value": "{\"country\":\"USA\"}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filmes de um ator (GET)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actors/1/films?filter=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actors",
+								"1",
+								"films"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar filme a um ator (POST)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Inception\",\n  \"year\": 2010,\n  \"directorsId\": 5,\n  \"genresId\": 3\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/actors/1/films",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actors",
+								"1",
+								"films"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar filmes de um ator (PATCH)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"year\": 2025\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/actors/1/films?where={\"title\":\"Inception\"}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actors",
+								"1",
+								"films"
+							],
+							"query": [
+								{
+									"key": "where",
+									"value": "{\"title\":\"Inception\"}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remover filmes de um ator (DELETE)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actors/1/films?where={\"title\":\"Inception\"}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actors",
+								"1",
+								"films"
+							],
+							"query": [
+								{
+									"key": "where",
+									"value": "{\"title\":\"Inception\"}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Apagar ator por ID",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/actors/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"actors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Directors",
+			"item": [
+				{
+					"name": "Listar todos os realizadores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/directors?filter={\"include\":[\"films\"]}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"directors"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "{\"include\":[\"films\"]}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar novo realizador",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Christopher Nolan\",\n  \"birthdate\": \"1970-07-30\",\n  \"country\": \"UK\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/directors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"directors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter realizador por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/directors/5?filter={\"include\":[\"films\"]}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"directors",
+								"5"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "{\"include\":[\"films\"]}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filmes de um realizador",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/directors/5/films",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"directors",
+								"5",
+								"films"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar filme a um realizador",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Oppenheimer\",\n  \"year\": 2023,\n  \"genresId\": 4\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/directors/5/films",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"directors",
+								"5",
+								"films"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Films",
+			"item": [
+				{
+					"name": "Listar todos os filmes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/films?filter={\"include\":[\"directors\",\"genres\",\"actors\"]}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"films"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "{\"include\":[\"directors\",\"genres\",\"actors\"]}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar novo filme",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Dune: Part Two\",\n  \"year\": 2024,\n  \"directorsId\": 6,\n  \"genresId\": 2\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/films",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"films"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obter filme por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/films/10?filter={\"include\":[\"directors\",\"genres\",\"actors\"]}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"films",
+								"10"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "{\"include\":[\"directors\",\"genres\",\"actors\"]}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atores de um filme",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/films/10/actors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"films",
+								"10",
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar ator a um filme",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Timothée Chalamet\",\n  \"birthdate\": \"1995-12-27\",\n  \"country\": \"USA\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/films/10/actors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"films",
+								"10",
+								"actors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Realizador de um filme",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/films/10/directors",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"films",
+								"10",
+								"directors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Género de um filme",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/films/10/genres",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"films",
+								"10",
+								"genres"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Genres",
+			"item": [
+				{
+					"name": "Listar todos os géneros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/genres?filter={\"include\":[\"films\"]}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"genres"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "{\"include\":[\"films\"]}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar novo género",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Sci-Fi\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/genres",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"genres"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filmes de um género",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/genres/3/films",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"genres",
+								"3",
+								"films"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar filme a um género",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Blade Runner 2049\",\n  \"year\": 2017,\n  \"directorsId\": 7\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/genres/3/films",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"genres",
+								"3",
+								"films"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
