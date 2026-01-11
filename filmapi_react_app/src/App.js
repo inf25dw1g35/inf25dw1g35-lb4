@@ -27,6 +27,7 @@ import { GenreShow } from './components/resources/genre/GenreShow';
 
 const dataProvider = lb4Provider('http://localhost:3000/');
 
+// Simple authProvider for demonstration purposes
 const authProvider = {
 	async login({ username, password }) {
 		if (username !== 'demo' || password !== 'demo') {

@@ -5,7 +5,8 @@ import { List, Datagrid, TextField, NumberField, ReferenceField, EditButton, Tex
 const filmFilters = [
 	<SearchInput source="title" alwaysOn />,
 	<NumberInput source="year" label="Year" />,
-	<TextInput source="directorsId" label="Directors" />
+	<TextInput source="directorsId" label="Directors" />,
+	<TextInput source="genresId" label="Genre" />
 ];
 
 
