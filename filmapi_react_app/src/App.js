@@ -27,7 +27,34 @@ import { GenreShow } from './components/resources/genre/GenreShow';
 
 const dataProvider = lb4Provider('http://localhost:3000/');
 
-
+const authProvider = {
+	async login({ username, password }) {
+		if (username !== 'demo' || password !== 'demo') {
+			throw new Error('Login failed');
+		}
+		localStorage.setItem('username', username);
+	},
+	async checkError(error) {
+		const status = error.status;
+		if (status === 401 || status === 403) {
+			localStorage.removeItem('username');
+			throw new Error('Session expired');
+		}
+		// other error codes (404, 500, etc): no need to log out
+	},
+	async checkAuth() {
+		if (!localStorage.getItem('username')) {
+			throw new Error('Not authenticated');
+		}
+	},
+	async logout() {
+		localStorage.removeItem('username');
+	},
+	async getIdentity() {
+		const username = localStorage.getItem('username');
+		return { id: username, fullName: username };
+	},
+};
 
 function App() {
 
@@ -35,7 +62,7 @@ function App() {
 	return (
 		<div className="App">
 
-			<Admin dashboard={dashboard} dataProvider={dataProvider} theme={houseLightTheme} darkTheme={houseDarkTheme}>
+			<Admin dashboard={dashboard} dataProvider={dataProvider} authProvider={authProvider} theme={houseLightTheme} darkTheme={houseDarkTheme}>
 				<Resource name="films" icon={LocalMoviesIcon} list={FilmList} edit={FilmEdit} create={FilmCreate} show={FilmShow} />
 				<Resource name="actors" icon={PeopleAltIcon} list={ActorList} edit={ActorEdit} create={ActorCreate} show={ActorShow} />
 				<Resource name="directors" icon={MovieOutlinedIcon} list={DirectorList} edit={DirectorEdit} create={DirectorCreate} show={DirectorShow} />
