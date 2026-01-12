@@ -9,7 +9,7 @@ export const FilmShow = () => (
 			<ReferenceField label="Director" source="directorsId" reference="directors" />
 			<ReferenceField label="Genre" source="genresId" reference="genres" />
 
-			<ReferenceManyField label="Actors" reference="actors" target="filmsId">
+			<ReferenceManyField label="Actors" reference="actors" target="filmsId,actorsId">
 				<Datagrid>
 					<TextField source="name" />
 					<DateField source="birthdate" />

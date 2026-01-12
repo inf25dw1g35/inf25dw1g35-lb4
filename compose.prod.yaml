@@ -1,7 +1,7 @@
 services:
   backend:
     # Constroi a imagem do serviço app a partir do Dockerfile na raiz do projeto
-    image: inf25dw1g35/inf25dw1g35-lb4-backend:v1
+    image: inf25dw1g35/inf25dw1g35-lb4-backend:v2
     container_name: filmAPIlb4-backend
     env_file:
       - ./lb4filmapi/.env
@@ -17,10 +17,10 @@ services:
       - filmAPIlb4-network
 
   frontend:
-    image: inf25dw1g35/inf25dw1g35-lb4-frontend:v1
+    image: inf25dw1g35/inf25dw1g35-lb4-frontend:v2
     container_name: filmAPIlb4-frontend
     ports:
-      - 3006:80      # Porta do host : porta do container Nginx
+      - 3006:80
     depends_on:
       - backend
     networks:

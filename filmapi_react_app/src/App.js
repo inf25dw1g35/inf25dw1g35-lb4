@@ -24,7 +24,6 @@ import { DirectorShow } from './components/resources/director/DirectorShow';
 import { ActorShow } from './components/resources/actor/ActorShow';
 import { GenreShow } from './components/resources/genre/GenreShow';
 
-
 const dataProvider = lb4Provider('http://localhost:3000/');
 
 // Simple authProvider for demonstration purposes
