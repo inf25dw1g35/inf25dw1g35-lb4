@@ -8,13 +8,6 @@ export const FilmEdit = () => (
 			<ReferenceInput source="directorsId" reference="directors" />
 			<ReferenceInput source="genresId" reference="genres" />
 
-			<SelectArrayInput
-				source="actorsId"
-				reference="actors"
-				optionText="name"
-				optionValue="id"
-				label="Actors"
-			/>
 
 		</SimpleForm>
 	</Edit>
